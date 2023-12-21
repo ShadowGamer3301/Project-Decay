@@ -36,6 +36,6 @@ IDXGIAdapter1* Engine::GfxBase::FindSuitableAdapter()
 
 	MessageBox(NULL, L"No suitable adapters found! Please ensure that you have GPU that supports DirectX 11 and has at least 2GB of VRAM",
 		L"ERROR: NO GPU", MB_ICONWARNING | MB_OK);
-
+	
 	return nullptr;
 }
