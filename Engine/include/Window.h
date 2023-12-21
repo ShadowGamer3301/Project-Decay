@@ -1,3 +1,4 @@
+#pragma once
 #include "Macro.h"
 #ifdef __linux
     #include <SFML/Window.hpp>

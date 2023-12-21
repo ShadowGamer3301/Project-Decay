@@ -6,25 +6,36 @@ Engine::GfxBase::GfxBase(Window* pWnd)
 	THROW_IF_FAILED(hr);
 
 	pAdapter = FindSuitableAdapter();
+	if (pAdapter == nullptr) throw Exception();
+
 }
 
 Engine::GfxBase::~GfxBase()
 {
-	SAFE_RELEASE(pAdapter);
-	SAFE_RELEASE(pFactory);
+	SAFERELEASE_COMPTR(pAdapter);
+	SAFERELEASE_COMPTR(pFactory);
 }
 
-IDXGIAdapter* Engine::GfxBase::FindSuitableAdapter()
+IDXGIAdapter1* Engine::GfxBase::FindSuitableAdapter()
 {
 	UINT i = 0;
-	IDXGIAdapter* pAdapter;
+	IDXGIAdapter1* pAdapter;
 	std::vector <IDXGIAdapter*> vAdapters;
-	while (pFactory->EnumAdapters(i, &pAdapter) != DXGI_ERROR_NOT_FOUND)
+	while (pFactory->EnumAdapters1(i, &pAdapter) != DXGI_ERROR_NOT_FOUND)
 	{
-		vAdapters.push_back(pAdapter);
-		++i;
+		DXGI_ADAPTER_DESC1 desc;
+		pAdapter->GetDesc1(&desc);
+
+		if (desc.Flags != DXGI_ADAPTER_FLAG_SOFTWARE)
+			if (desc.DedicatedVideoMemory > 2147483648)
+			{
+				printf("Adapter found: %ls\n", desc.Description);
+				return pAdapter;
+			}
 	}
-	
-	//For now return first found adapter (replace it later)
-	return vAdapters[0];
+
+	MessageBox(NULL, L"No suitable adapters found! Please ensure that you have GPU that supports DirectX 11 and has at least 2GB of VRAM",
+		L"ERROR: NO GPU", MB_ICONWARNING | MB_OK);
+
+	return nullptr;
 }

@@ -12,6 +12,7 @@
     
     #define THROW_IF_FAILED(hr) if(FAILED(hr)) throw GfxException(hr)
     #define SAFE_RELEASE(p) if(p) p->Release()
+    #define SAFERELEASE_COMPTR(p) if(p) p.Reset()
 #endif
 
 #define DELETE_ON_VAL(p) if(p) delete p

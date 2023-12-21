@@ -19,11 +19,11 @@ namespace Engine
 		~GfxBase();
 
 	private:
-		IDXGIAdapter* FindSuitableAdapter();
+		IDXGIAdapter1* FindSuitableAdapter();
 
 	private:
 		wrl::ComPtr<IDXGIFactory2> pFactory;
-		wrl::ComPtr<IDXGIAdapter> pAdapter;
+		wrl::ComPtr<IDXGIAdapter1> pAdapter;
 		wrl::ComPtr<IDXGISwapChain1> pSwapchain;
 		wrl::ComPtr<ID3D11Device> pDevice;
 		wrl::ComPtr<ID3D11DeviceContext> pContext;
