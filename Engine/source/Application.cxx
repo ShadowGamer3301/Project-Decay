@@ -2,10 +2,14 @@
 
 Engine::Application::Application()
 {
-    pWindow = new Window("Test");
+#ifdef _WIN32
+    pWindow = new Window(L"Test"); 
+    pGfxBase = new GfxBase(pWindow);
+#endif
 }
 
 Engine::Application::~Application()
 {
+    DELETE_ON_VAL(pGfxBase);
     DELETE_ON_VAL(pWindow);
 }

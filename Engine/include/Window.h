@@ -1,14 +1,47 @@
 #include "Macro.h"
-#include <SFML/Window.hpp>
-#include <SFML/Window/Window.hpp>
+#ifdef __linux
+    #include <SFML/Window.hpp>
+    #include <SFML/Window/Window.hpp>
+#endif
+#ifdef _WIN32
+    #include <Windows.h>
+#endif
 #include <optional>
 
 namespace Engine {
 
     #ifdef _WIN32
-        class DLLEXP Window;
-    #endif
+    class DLLEXP Window
+    {
+    private:
+        class WindowClass
+        {
+        public:
+            static constexpr const wchar_t* GetName() noexcept { return L"Engine"; }
+            static HINSTANCE GetInstance() noexcept { return wndClass.hInst; }
+        private:
+            WindowClass() noexcept;
+            ~WindowClass();
+            WindowClass(const WindowClass&) = delete;
+            WindowClass operator=(const WindowClass&) = delete;
 
+            static WindowClass wndClass;
+            HINSTANCE hInst;
+        };
+    public:
+        Window(LPCWSTR title);
+        ~Window();
+
+        std::optional<int> ProcessMessage();
+
+    private:
+        static LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp);
+
+    private:
+        HWND hWnd;
+    };
+    #endif
+#ifdef __linux
     class Window
     {
     public:
@@ -25,4 +58,6 @@ namespace Engine {
     private:
         sf::Window* pWnd;
     };
+
+#endif
 }

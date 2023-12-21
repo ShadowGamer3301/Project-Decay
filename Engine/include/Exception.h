@@ -4,6 +4,7 @@
 */
 
 #pragma once
+#include "Macro.h"
 #include <exception>
 #include <source_location>
 #include <string>

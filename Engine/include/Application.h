@@ -9,6 +9,10 @@
 #include "Macro.h"
 #include "Window.h"
 
+#ifdef _WIN32
+    #include "GfxDX/GfxBase.h"
+#endif
+
 namespace Engine {
     #ifdef _WIN32
         class DLLEXP Application;
@@ -24,6 +28,7 @@ namespace Engine {
 
     protected:
         Window* pWindow = nullptr;
+        GfxBase* pGfxBase = nullptr;
     };
 
     //Needs to be defined in client
