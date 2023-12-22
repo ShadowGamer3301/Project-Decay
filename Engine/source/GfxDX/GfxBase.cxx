@@ -23,6 +23,9 @@ Engine::GfxBase::GfxBase(Window* pWnd)
 
 Engine::GfxBase::~GfxBase()
 {
+	SAFERELEASE_COMPTR(pRender);
+	SAFERELEASE_COMPTR(pDepthState);
+	SAFERELEASE_COMPTR(pDepthView);
 	SAFERELEASE_COMPTR(pDevice);
 	SAFERELEASE_COMPTR(pAdapter);
 	SAFERELEASE_COMPTR(pFactory);
@@ -138,6 +141,8 @@ void Engine::GfxBase::BuildRenderTargetViewAndDepthView()
 	hr = pDevice->CreateDepthStencilState(&dsDesc, pDepthState.GetAddressOf());
 	THROW_IF_FAILED(hr);
 
+	pContext->OMSetDepthStencilState(pDepthState.Get(), 0);
+
 	D3D11_DEPTH_STENCIL_VIEW_DESC descDSV;
 	descDSV.Format = DXGI_FORMAT_D32_FLOAT_S8X24_UINT;
 	descDSV.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
@@ -146,4 +151,18 @@ void Engine::GfxBase::BuildRenderTargetViewAndDepthView()
 	hr = pDevice->CreateDepthStencilView(pDepthStencil, &descDSV, pDepthView.GetAddressOf());
 	THROW_IF_FAILED(hr);
 	SAFE_RELEASE(pDepthStencil);
+}
+
+void Engine::GfxBase::StartRender()
+{
+
+	float color[] = { 0.0f, 0.2f, 0.6f, 1.0f };
+	pContext->ClearRenderTargetView(pRender.Get(), color);
+	pContext->ClearDepthStencilView(pDepthView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+
+}
+
+void Engine::GfxBase::EndRender()
+{
+	pSwapchain->Present(0, 0);
 }

@@ -18,6 +18,9 @@ namespace Engine
 		GfxBase(Window* pWnd);
 		~GfxBase();
 
+		void StartRender();
+		void EndRender();
+
 	private:
 		IDXGIAdapter1* FindSuitableAdapter();
 		void BuildSwapChain(HWND hWnd);

@@ -29,5 +29,8 @@ int DecayGame::Run()
     {
         if(const auto ec = pWindow->ProcessMessage())
             return *ec;
+        pGfxBase->StartRender();
+        pGfxBase->EndRender();
+
     }
 }
