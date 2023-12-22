@@ -35,6 +35,9 @@ namespace Engine {
 
         std::optional<int> ProcessMessage();
 
+        inline HWND GetWindowHandle() const noexcept { return hWnd; }
+        void ChangeTitle(LPCWSTR title);
+
     private:
         static LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp);
 

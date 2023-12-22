@@ -98,4 +98,10 @@ Engine::Window::~Window()
     DestroyWindow(hWnd);
 }
 
+void Engine::Window::ChangeTitle(LPCWSTR title)
+{
+    if (SetWindowText(hWnd, title) == 0)
+        throw Exception();
+}
+
 #endif

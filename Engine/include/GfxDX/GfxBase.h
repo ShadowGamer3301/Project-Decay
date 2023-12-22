@@ -20,6 +20,8 @@ namespace Engine
 
 	private:
 		IDXGIAdapter1* FindSuitableAdapter();
+		void BuildSwapChain(HWND hWnd);
+		void BuildRenderTargetViewAndDepthView();
 
 	private:
 		wrl::ComPtr<IDXGIFactory2> pFactory;
@@ -30,5 +32,6 @@ namespace Engine
 		wrl::ComPtr<ID3D11RenderTargetView> pRender;
 		wrl::ComPtr<ID3D11DepthStencilState> pDepthState;
 		wrl::ComPtr<ID3D11DepthStencilView> pDepthView;
+		
 	};
 }

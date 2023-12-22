@@ -10,7 +10,12 @@ public:
     int Run() override;
 };
 
-DecayGame::DecayGame() {}
+DecayGame::DecayGame() {
+#ifdef _WIN32
+    pWindow->ChangeTitle(L"Project Decay (WIN32 | D3D11)");
+#endif
+
+}
 DecayGame::~DecayGame() {}
 
 Engine::Application* Engine::CreateNewApp()
