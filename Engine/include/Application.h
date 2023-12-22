@@ -11,6 +11,8 @@
 
 #ifdef _WIN32
     #include "GfxDX/GfxBase.h"
+#else
+    #include "GfxVK/GfxBase.h"
 #endif
 
 namespace Engine {

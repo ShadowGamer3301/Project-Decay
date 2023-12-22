@@ -18,8 +18,12 @@ namespace Engine {
 
     private:
         void CreateInstance();
+        void FindSuitablePhysicalDevice();
+        void CreateDeviceInterface();
 
     private:
         VkInstance mInstance;
+        VkDevice mDevice;
+        VkPhysicalDevice mPhysicalDevice;
     };
 }
